@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'store',
 ]
 
+AUTH_USER_MODEL = 'store.User'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -52,7 +54,6 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'marketplace_main.urls'
-AUTH_USER_MODEL = 'marketplace.User'
 
 TEMPLATES = [
     {
