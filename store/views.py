@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseForbidden
+from .forms import ProductForm
 from .forms import RegisterForm
 from .models import Product
 
