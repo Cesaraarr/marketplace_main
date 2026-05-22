@@ -63,7 +63,7 @@ class Cart(models.Model):
         User,
         on_delete=models.CASCADE,
         related_name='carts'
-    )  # 1:N
+    )
 
     products = models.ManyToManyField(
         Product,
@@ -73,23 +73,28 @@ class Cart(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
 
+    @property
+    def total(self):
+        return sum(item.subtotal for item in self.cartitem_set.all())
+
     def __str__(self):
         return f"Cart {self.id} - {self.user}"
-
 
 # =========================
 # 🧾 CartItem (tabla intermedia)
 # =========================
 class CartItem(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-
     quantity = models.PositiveIntegerField(default=1)
 
     class Meta:
         unique_together = ('cart', 'product')
+
+    @property
+    def subtotal(self):  
+        return self.product.price * self.quantity
 
     def __str__(self):
         return f"{self.product} x {self.quantity}"
